@@ -32,7 +32,7 @@ print("-------a.b-------")
 print(d)#matrix multiplication
 print("------a@b------")
 print(a@b)
-print("------a.dot(b)------#")
+
 
 
 
