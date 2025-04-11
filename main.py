@@ -66,3 +66,40 @@ for col in numerical_cols:
 
     print(f"\nOutliers in '{col}': {len(outlier_rows)} found")
 
+#OBJECTIVE 1: Identify which cuisines are most commonly offered by restaurants.
+
+print("OBJECTIVE 1: Most Popular Cuisines (Bar Plot)\n")
+df_cuisine = df_cleaned.dropna(subset=['Cuisines'])
+all_cuisines = df_cuisine['Cuisines'].str.split(',').explode().str.strip()
+cuisine_counts = all_cuisines.value_counts()
+
+# Top 10 cuisines
+top_cuisines = cuisine_counts.head(10)
+print("\nTop 10 Most Common Cuisines:\n")
+print(top_cuisines)
+print("\n\n Number of Unique Cuisines:", all_cuisines.nunique())
+print("\n Most Common Cuisine:", cuisine_counts.idxmax(), "(", cuisine_counts.max(), "restaurants )")
+plt.figure(figsize=(12, 6))
+sns.barplot(x=top_cuisines.values, y=top_cuisines.index, palette="viridis")
+plt.title("Top 20 Most Popular Cuisines Offered by Restaurants")
+plt.xlabel("Number of Restaurants Offering")
+plt.ylabel("Cuisine Type")
+plt.tight_layout()
+plt.show()
+
+
+### Objective 2: Analyze how many restaurants offer table booking and whether it's a common feature.
+
+print("OBJECTIVE 2: Table Booking vs. No Table Booking (Donut chart)\n")
+sns.set(style="whitegrid")
+plt.rcParams.update({'font.size': 10})
+table_booking_counts = df_cleaned['Has Table booking'].value_counts()
+plt.figure(figsize=(6,6))
+colors = ['#66b3ff', '#99ff99']
+plt.pie(table_booking_counts, labels=table_booking_counts.index, autopct='%1.1f%%', colors=colors, startangle=90, wedgeprops=dict(width=0.4))
+plt.title("Table Booking Availability")
+plt.tight_layout()
+plt.show()
+print("\nTable Booking Count:\n", table_booking_counts)
+
+
