@@ -102,4 +102,52 @@ plt.tight_layout()
 plt.show()
 print("\nTable Booking Count:\n", table_booking_counts)
 
+### Objective 3: Understand how many restaurants offer online delivery.
+
+print("OBJECTIVE 3: Online Delivery Availability - Stacked Bar Chart\n")
+online_delivery_grouped = df_cleaned.groupby(['Price range', 'Has Online delivery']).size().unstack(fill_value=0)
+online_delivery_grouped.plot(kind='bar', stacked=True, figsize=(10, 6), colormap='Set2')
+plt.title("Stacked Bar Chart: Online Delivery Availability by Price Range")
+plt.xlabel("Price Range (1 = Cheap, 4 = Expensive)")
+plt.ylabel("Number of Restaurants")
+plt.legend(title="Has Online Delivery")
+plt.xticks(rotation=0)
+plt.tight_layout()
+plt.show()
+
+
+### Objective 4:  Analyze how restaurants are rated.
+
+print("OBJECTIVE 4: Average Rating Distributionc- Histogram\n")
+sns.set_style("whitegrid")
+plt.figure(figsize=(10, 6))
+sns.histplot(data=df_cleaned, x='Aggregate rating', bins=20, kde=True, color='#003f5c')  # Navy blue
+plt.title("Histogram: Distribution of Aggregate Ratings", fontsize=14)
+plt.xlabel("Aggregate Rating")
+plt.ylabel("Number of Restaurants")
+plt.tight_layout()
+plt.show()
+
+
+### Objective 5: Check if higher priced restaurants tend to have better ratings.
+
+print("OBJECTIVE 5: Price Range vs Rating")
+# Boxplot: Price Range vs Rating
+plt.figure(figsize=(10,6))
+sns.boxplot(x='Price range', y='Aggregate rating', data=df_cleaned, palette="YlGnBu")
+plt.title("Boxplot: Price Range vs Rating")
+plt.xlabel("Price Range (1 = cheapest, 4 = most expensive)")
+plt.ylabel("Aggregate Rating")
+plt.tight_layout()
+plt.show()
+price_counts = df_cleaned['Price range'].value_counts().sort_index()
+labels = ['1 (Cheapest)', '2', '3', '4 (Most Expensive)']
+# Pie chart
+plt.figure(figsize=(7,7))
+plt.pie(price_counts, labels=labels, autopct='%1.1f%%', startangle=140, colors=sns.color_palette("YlGnBu", 4))
+plt.title("Distribution of Restaurants by Price Range")
+plt.tight_layout()
+plt.show()
+
+
 
